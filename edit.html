@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport"
+				content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<title>Ethereum-markdown-editor</title>
+	<script src="agent_modules/dist/libs/markdown-editor/dependencies/ckeditor4/ckeditor.js"></script>
+	<link rel="stylesheet" type="text/css" href="agent_modules/dist/libs/markdown-editor/style.css">
+	<link rel="stylesheet" type="text/css" href="styles/dapp-styles.css">
+</head>
+<body>
+
+<div id="app" class="dapp-flex-content">
+
+	<!-- content-->
+	<main class="dapp-content">
+		<form class="markdownEditorForm">
+				<!-- <button id="submitPost" class="cke_button">Submit</button> -->
+				<textarea name="markdownEditor" id="markdownEditor" rows="10" cols="80">
+					<br />
+					<h2>What would you like to share?</h2>
+				</textarea>
+		</form>
+		<button id="submitPost">Submit</button>
+	</main>
+
+</div>
+
+	<script src="agent_modules/dist/libs/markdown-editor/markdowneditor.min.js"></script>
+</body>
+</html>
