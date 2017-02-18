@@ -27,12 +27,12 @@ console.log('/markdown-newsagent/postbuildglue.js starting....')
 	fs.createReadStream('./agent_modules/src/markdown-reader/build/dist/style.css').pipe(fs.createWriteStream('./agent_modules/dist/libs/markdown-reader/style.css'));
 	//fs.createReadStream('./agent_modules/src/markdown-reader/build/dist/appConfiguration.json').pipe(fs.createWriteStream('./appConfiguration.json'));
 
-	ncp('./agent_modules/src/markdown-reader/build/dist/repository', './repository', function (err) {
+/*	ncp('./agent_modules/src/markdown-reader/build/dist/repository', './repository', function (err) {
 		if (err) {
 			console.log(1);
 			return console.error(err);
 		}
-	});
+	});*/
 
 	// Editor
 	fs.createReadStream('./agent_modules/src/markdown-editor/build/dist/build.min.js').pipe(fs.createWriteStream('./agent_modules/dist/libs/markdown-editor/markdowneditor.min.js'));

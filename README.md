@@ -9,7 +9,7 @@ In order to merge the libraries into one big project and keep their build enviro
 Here's an overview of the project as a whole and a quick summary of the two modules and how they relate to one another.
 
 *Reader*
-* * Application captures ``/#filename.md`` routes in the URL and navigates to the file. It knows a preconfigured URL-prefix to get the correct path.
+* Application captures ``/#filename.md`` routes in the URL and navigates to the file. It knows a preconfigured URL-prefix to get the correct path.
 * Different 'fragments' or files can link to one another.
 * App does error handling for illegal characters, filters out HTML documents (this caused an issue whereby the page itself was loaded and rendered the doctype to the page) also handles error when file cannot be found.
 
@@ -23,7 +23,7 @@ Here's an overview of the project as a whole and a quick summary of the two modu
 
 <br />
 ### Files ####
-* Source files in ``/agent_modules/src``
+* Source files in ``/agent_modules/src/``
 * Built, ready to go optimised files for production in ``/agent_modules/dist/``
 * While the src folders of the modules also contain the HTML files, use the HTML files in this root folder here as the ones in the src are only for testing the individual modules.
 
