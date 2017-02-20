@@ -41,5 +41,5 @@ index.html and edit.html are configured to look for the libraries, extra styles 
 <br />
 
 ### Building ####
-* Simply run ``npm run build`` in this folder (``npm install-all`` for the first run in this folder before you do this) to run the build process of both submodules and copy the necessary files over to ``/agent_modules/dist/*libraryname*``. It will be compiled to ``/agent_modules/dist/*libraryname*``. Which is where the html also looks for the libraries. For building just the reader, run ``npm run build-reader``. For just the editor: ``npm run build-editor``.
+* Simply run ``npm run build`` in this folder (``npm run install-all`` for the first run in this folder before you do this) to run the build process of both submodules and copy the necessary files over to ``/agent_modules/dist/*libraryname*``. It will be compiled to ``/agent_modules/dist/*libraryname*``. Which is where the html also looks for the libraries. For building just the reader, run ``npm run build-reader``. For just the editor: ``npm run build-editor``.
 * You could also still compile from the sub modules if you want to, see their respective documentation. Note that the compiled will NOT be copied to ``/agent_modules/dist/*libraryname*`` if compiling from inside each sub project (library).
