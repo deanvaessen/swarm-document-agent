@@ -1,3 +1,87 @@
+::selection {
+    color: #fff;
+    text-shadow: 0 0 0
+}
+
+::-moz-selection {
+    color: #fff;
+    text-shadow: 0 0 0
+}
+
+::-webkit-selection {
+    color: #fff;
+    text-shadow: 0 0 0
+}
+
+html {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    height: 100%
+}
+
+body {
+    padding: 64px 96px;
+}
+
+.errorText {
+    color: red;
+    text-align: center
+}
+
+.errorText ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0
+}
+
+.errorText a {
+    text-decoration: none;
+    font-style: italic;
+    color: red
+}
+
+::selection {
+    color: #fff;
+    text-shadow: 0 0 0
+}
+
+::-moz-selection {
+    color: #fff;
+    text-shadow: 0 0 0
+}
+
+::-webkit-selection {
+    color: #fff;
+    text-shadow: 0 0 0
+}
+
+html {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    height: 100%
+}
+
+body {
+    padding-top: 5em
+}
+
+.errorText {
+    color: red;
+    text-align: center
+}
+
+.errorText ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0
+}
+
+.errorText a {
+    text-decoration: none;
+    font-style: italic;
+    color: red
+}
+
 @font-face {
   font-family: 'Simple-Line-Icons';
   src: url('icons/Simple-Line-Icons.eot');
@@ -2179,14 +2263,14 @@ progress::progress-value {
 }
 .dapp-account-list li.selected,
 .dapp-account-list li button.selected {
-  background: #6691C2;
+  background: #02A8F3;
   min-height: 36.8px;
 }
 .dapp-account-list li.selected:hover,
 .dapp-account-list li button.selected:hover,
 .dapp-account-list li.selected:focus,
 .dapp-account-list li button.selected:focus {
-  background: #6691C2;
+  background: #02A8F3;
 }
 .dapp-account-list li.selected h3,
 .dapp-account-list li button.selected h3,
@@ -2207,7 +2291,7 @@ progress::progress-value {
   text-align: center;
   padding-top: 4px;
   padding: 9px 10px;
-  background: linear-gradient(to right, transparent, #6691C2 50%);
+  background: linear-gradient(to right, transparent, #02A8F3 50%);
 }
 .dapp-account-list li button {
   position: relative;
@@ -2245,7 +2329,7 @@ progress::progress-value {
   display: block;
   padding: 0;
   margin: 0;
-  color: #6691C2;
+  color: #02A8F3;
   text-transform: none;
   font-weight: 400;
   font-size: 90%;
@@ -2263,8 +2347,9 @@ a,
 a:visited,
 button {
   text-decoration: none;
-  color: #6691C2;
+  color: #02A8F3;
   outline: 0;
+  font-weight: 400;
 }
 a:hover,
 a:visited:hover,
@@ -2277,7 +2362,7 @@ button:focus {
 a:focus,
 a:visited:focus,
 button:focus {
-  border-bottom: 1px dotted #6691C2;
+  border-bottom: 1px dotted #02A8F3;
 }
 a:active,
 a:visited:active,
@@ -2312,7 +2397,7 @@ hr {
 }
 h1 {
   margin: 16px 0;
-  margin-bottom: 48px;
+  margin-top: 48px;
   font-weight: 100;
   font-size: 2.2em;
   color: #827a7a;
@@ -2328,16 +2413,12 @@ h1 strong {
 }
 h2 {
   display: inline-block;
-  padding: 0 8px;
   padding-bottom: 1px;
-  margin: 48px 0;
   font-weight: 500;
-  font-size: 1em;
+  font-size: 1.2em;
   text-transform: uppercase;
-  background: #827a7a;
-  color: #FAFAFA;
-  font-family: 'Montserrat';
-  font-weight: 400;
+  color: #827a7a;
+  font-weight: 600;
 }
 h2 + table {
   margin-top: 0;
@@ -2359,14 +2440,15 @@ h4 {
 }
 pre,
 code {
-  overflow-y: auto;
-  overflow-x: hidden;
+  /* overflow-y: auto; */
+  /* overflow-x: hidden; */
   -webkit-overflow-scrolling: touch;
   word-break: break-word;
   padding: 6.13333333px;
   background-color: #f5f4f2;
-  font-size: 0.8em;
+  font-size: 0.9em;
   text-align: left;
+  line-height: 2
 }
 table {
   width: 100%;
@@ -2415,7 +2497,7 @@ table tbody tr td span {
   border: 0;
   border-bottom: solid 2px #CCC6C6;
   background-color: #f5f4f2;
-  color: #6691C2;
+  color: #02A8F3;
 }
 .dapp-input::-webkit-input-placeholder {
   color: #CCC6C6;
@@ -2451,7 +2533,7 @@ table tbody tr td span {
   border: 0;
   border-bottom: solid 2px #CCC6C6;
   background-color: #f5f4f2;
-  color: #6691C2;
+  color: #02A8F3;
 }
 .dapp-address-input input::-webkit-input-placeholder {
   color: #CCC6C6;
@@ -2489,7 +2571,7 @@ textarea {
   border: 0;
   border-bottom: solid 2px #CCC6C6;
   background-color: #f5f4f2;
-  color: #6691C2;
+  color: #02A8F3;
   display: inline-block;
   width: 300px;
   max-width: 100%;
@@ -2560,7 +2642,7 @@ input:focus,
 select:focus,
 textarea:focus {
   outline: 0;
-  border-color: #6691C2;
+  border-color: #02A8F3;
 }
 h1 + input,
 h1 + select,
@@ -2619,7 +2701,7 @@ input[type="radio"]:after {
   position: absolute;
   top: 6px;
   left: 6px;
-  background: #6691C2;
+  background: #02A8F3;
   -webkit-box-shadow: 0 0px 1px rgba(0, 0, 0, 0.3);
   -moz-box-shadow: 0 0px 1px rgba(0, 0, 0, 0.3);
   box-shadow: 0 0px 1px rgba(0, 0, 0, 0.3);
@@ -2701,7 +2783,7 @@ input[type="range"]:focus {
   outline: none;
 }
 input[type="range"]:focus::-webkit-slider-thumb {
-  background-color: #6691C2;
+  background-color: #02A8F3;
 }
 input[type="range"]::-moz-range-track {
   height: 5px;
@@ -2727,7 +2809,7 @@ input[type="range"]:focus {
   outline: none;
 }
 input[type="range"]:focus::-moz-range-thumb {
-  background-color: #6691C2;
+  background-color: #02A8F3;
 }
 label {
   font-weight: 300;
@@ -2759,6 +2841,7 @@ body {
   background-color: #FAFAFA;
   font: 100 16px 'Source Sans Pro', 'Helvetica Neue', arial, sans-serif;
   color: #111;
+  padding: 64px 92px;
 }
 body.disable-scroll {
   overflow: hidden;
@@ -3056,7 +3139,7 @@ body.blur .dapp-header {
 }
 .dapp-actionbar nav ul li {
   margin: 16px 0;
-  color: #6691C2;
+  color: #02A8F3;
   position: relative;
   overflow: hidden;
   text-align: center;
@@ -3178,7 +3261,7 @@ body.blur .dapp-header {
   height: 36.8px;
   min-width: 100px;
   padding: 4.6px 10.66666667px;
-  background: #6691C2;
+  background: #02A8F3;
   color: #FAFAFA;
   border-bottom: 3px solid #5484bb;
   -webkit-background-clip: padding-box;
@@ -3252,7 +3335,7 @@ body.blur .dapp-header {
   outline: 0;
 }
 .dapp-tag-button.active {
-  background: #6691C2;
+  background: #02A8F3;
   color: #FAFAFA;
 }
 /* #### All small screens #### */
