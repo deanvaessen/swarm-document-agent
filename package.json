@@ -16,7 +16,12 @@
   	"build" : "npm run build-reader && npm run build-editor && npm run post-build" ,
   	"build-reader": "cd ./agent_modules/src/markdown-reader/dev/ && npm run build",
   	"build-editor": "cd ./agent_modules/src/markdown-editor/dev/ && npm run build",
-  	"post-build": "node postbuildglue.js --exec babel-node --presets es2015,stage-2"
+  	"post-build": "node postbuildglue.js --exec babel-node --presets es2015,stage-2",
+    "install-all" : "npm run install-reader-dev && npm run install-reader-build && npm run install-editor-dev && npm run install-editor-build",
+    "install-reader-dev" : "cd ./agent_modules/src/markdown-reader/dev/ && npm install",
+    "install-reader-build" : "cd ./agent_modules/src/markdown-reader/build/ && npm install",
+    "install-editor-dev" : "cd ./agent_modules/src/markdown-editor/dev/ && npm install",
+    "install-editor-build" : "cd ./agent_modules/src/markdown-editor/build/ && npm install",
   },
   "dependencies": {},
   "devDependencies": {
