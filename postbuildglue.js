@@ -23,8 +23,8 @@ console.log('/markdown-newsagent/postbuildglue.js starting....')
 	ncp.limit = 16;
 
 	// Reader
-	fs.createReadStream('./agent_modules/src/markdown-reader/build/dist/build.min.js').pipe(fs.createWriteStream('./agent_modules/dist/libs/markdown-reader/markdownreader.min.js'));
-	fs.createReadStream('./agent_modules/src/markdown-reader/build/dist/style.css').pipe(fs.createWriteStream('./agent_modules/dist/libs/markdown-reader/style.css'));
+	fs.createReadStream('./src/agent_modules/src/markdown-reader/dev/dist/build.min.js').pipe(fs.createWriteStream('./dist/agent_modules/dist/libs/markdown-reader/markdownreader.min.js'));
+	fs.createReadStream('./src/agent_modules/src/markdown-reader/dev/dist/style.css').pipe(fs.createWriteStream('./dist/agent_modules/dist/libs/markdown-reader/style.css'));
 	//fs.createReadStream('./agent_modules/src/markdown-reader/build/dist/appConfiguration.json').pipe(fs.createWriteStream('./appConfiguration.json'));
 
 /*	ncp('./agent_modules/src/markdown-reader/build/dist/repository', './repository', function (err) {
@@ -35,8 +35,8 @@ console.log('/markdown-newsagent/postbuildglue.js starting....')
 	});*/
 
 	// Editor
-	fs.createReadStream('./agent_modules/src/markdown-editor/build/dist/build.min.js').pipe(fs.createWriteStream('./agent_modules/dist/libs/markdown-editor/markdowneditor.min.js'));
-	fs.createReadStream('./agent_modules/src/markdown-editor/build/dist/style.css').pipe(fs.createWriteStream('./agent_modules/dist/libs/markdown-editor/style.css'));
+	fs.createReadStream('./src/markdown-editor/dev/dist/build.min.js').pipe(fs.createWriteStream('./dist/agent_modules/dist/libs/markdown-editor/markdowneditor.min.js'));
+	fs.createReadStream('./src/markdown-editor/dev/dist/style.css').pipe(fs.createWriteStream('./dist/agent_modules/dist/libs/markdown-editor/style.css'));
 
 	ncp('./agent_modules/src/markdown-editor/build/dist/dependencies', './agent_modules/dist/libs/markdown-editor/dependencies', function (err) {
 		if (err) {
