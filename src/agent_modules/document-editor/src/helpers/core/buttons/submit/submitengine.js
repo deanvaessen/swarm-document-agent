@@ -1,8 +1,6 @@
 /*eslint-disable */
 import Plugin from '@ckeditor/ckeditor5-core/src/plugin';
-import TestCommand from './testcommand';
-
-const ITALIC = 'italic';
+import SubmitCommand from './submitcommand';
 
 /**
  * The XXX engine feature.
@@ -12,9 +10,9 @@ const ITALIC = 'italic';
  *
  * @extends module:core/plugin~Plugin
  */
-export default class ItalicEngine extends Plugin {
+export default class SubmitEngine extends Plugin {
 	init() {
 		const editor = this.editor;
-		editor.commands.set( ITALIC, new TestCommand( editor ) );
+		editor.commands.set( 'SubmitDocument', new SubmitCommand( editor ) );
 	}
 }

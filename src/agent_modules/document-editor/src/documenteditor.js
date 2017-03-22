@@ -10,8 +10,8 @@
 	import support from './helpers/core/index.js';
 
 	// Vendor functions
-	const toMarkdown = require('to-markdown');
-	import marked from './helpers/vendor/marked.js';
+	import toMarkdown from 'to-markdown';
+	import marked from 'marked';
 
 	//CKEDITOR
 	import ClassicEditor from '@ckeditor/ckeditor5-editor-classic/src/classic';
@@ -21,25 +21,26 @@
 	import Paragraph from '@ckeditor/ckeditor5-paragraph/src/paragraph';
 	import Undo from '@ckeditor/ckeditor5-undo/src/undo';
 	import Bold from '@ckeditor/ckeditor5-basic-styles/src/bold';
-	//import Italic from '@ckeditor/ckeditor5-basic-styles/src/italic';
+	import Italic from '@ckeditor/ckeditor5-basic-styles/src/italic';
 	import Image from '@ckeditor/ckeditor5-image/src/image';
 	import List from '@ckeditor/ckeditor5-list/src/list';
 	import Link from '@ckeditor/ckeditor5-link/src/link';
 	import Headings from '@ckeditor/ckeditor5-heading/src/heading';
 
-
-
-
-	//import Plugin from '@ckeditor/ckeditor5-core/src/plugin';
-	//import ButtonView from '@ckeditor/ckeditor5-ui/src/button/buttonview';
-	import TestEngine from './helpers/core/buttons/testengine';
-	import Test from './helpers/core/buttons/test';
+	// Custom buttons
+	import Submit from './helpers/core/buttons/submit/submit';
+	import ToMarkdown from './helpers/core/buttons/tomarkdown/tomarkdown';
 
 
 /**
 * { App }
 */
 const index = (function() {
+
+	let test = {
+		postURL : null,
+		readURL: null
+	};
 
 	/**
 	* { Init }
@@ -49,7 +50,7 @@ const index = (function() {
 		/**
 		* { Variables }
 		*/
-		let postURL, readURL;
+		let postURL, readURL, documentEditor;
 
 			//Set up the markdown render options
 			const renderer = new marked.Renderer();
@@ -78,15 +79,25 @@ const index = (function() {
 				postURL = editorConfigurationObject.postURL;
 			}
 
+
+			// Set up the editor in the window object so we can access it from our buttons
+			if (!window.swarmagent){
+				window.swarmagent = {};
+			}
+
+			window.swarmagent.editor = {};
+
 			//console.log(readURL, postURL);
+
+
 
 			/**
 			 * { submitPost }
-			 * Submit the post
+			 * Post submition method
 			 */
 
-
-			const submitPost = (post)=> {
+			 // Attach it to our namespace
+			window.swarmagent.editor.submitPost = (post) => {
 				//console.log('I am posting....');
 				//console.log(post);
 
@@ -103,12 +114,16 @@ const index = (function() {
 						//console.log('responseStatus:', responseStatus);
 
 					if (responseStatus != 200){
-						document.getElementById('markdownEditor').value = 'Oops! We could not post this document. <br /> Error: <br />' + responseText;
+							//document.getElementById('contentField').value = 'Oops! We could not post this document. <br /> Error: <br />' + responseText;
+						documentEditor.setData(`Oops! We could not post this document. <br /> Error: <br /> ${responseText}`);
+
 						document.title = 'Post error!';
 					} else if (responseStatus == 200) {
-						const postedURL = 'index.html#' + responseText;
+						console.log(responseText);
 
-						window.location.href = postedURL;
+						//const postedURL = 'index.html#' + responseText;
+
+						//window.location.href = postedURL;
 					}
 				});
 			};
@@ -117,23 +132,8 @@ const index = (function() {
 			 * { CKEDITOR }
 			 * Init the editor on page and set up submit button
 			 */
-/*			const editor = window.CKEDITOR.replace('markdownEditor'); // bind editor
-
-			editor.addCommand('postSubmition', { // create named command for post submition
-				exec : function() {
-					submitPost(window.CKEDITOR.instances.markdownEditor.getData());
-				}
-			});
-
-			editor.ui.addButton('submitpost', { // add new button and bind our command
-				label : 'Submit post',
-				command : 'postSubmition',
-				toolbar : 'styles'
-			});
-*/
-
 			try {
-				ClassicEditor.create(document.querySelector('#markdownEditor'), {
+				ClassicEditor.create(document.querySelector('#contentField'), {
 					plugins : [
 							//Autoformat,
 							//ArticlePreset,
@@ -143,11 +143,12 @@ const index = (function() {
 							Paragraph,
 							Undo,
 							Bold,
-							//Italic,
+							Italic,
 							Image,
 							Link,
 							List,
-							Test
+							Submit,
+							ToMarkdown
 						],
 						toolbar: [
 							'headings',
@@ -158,18 +159,17 @@ const index = (function() {
 							'bulletedList',
 							'numberedList',
 							'undo',
-							'redo'
+							'redo',
+							'submit',
+							'toMarkdown',
 						 ]
 				}).then((editor) => {
-					window.editor = editor;
+					// Make it available to the rest of the app
+					window.swarmagent.editor.engine = editor;
+					documentEditor = editor;
 
-					// Add our custom buttons
-
-
-
-
-
-
+					// Set a welcome text
+					documentEditor.setData('<h2>What would you like to share?</h2>');
 				})
 				.catch((err) => {
 					console.error(err.stack);
@@ -179,7 +179,7 @@ const index = (function() {
 			}
 
 			function showCompatibilityMessage() {
-				const editorElement = document.querySelector('#markdownEditor');
+				const editorElement = document.querySelector('#contentField');
 				const message = document.createElement('p');
 
 				message.innerHTML = `
@@ -234,24 +234,24 @@ const index = (function() {
 							if (!validContentType && xhr.status != '404') {
 								console.log(contentValidityError);
 
-								document.getElementById('markdownEditor').value = 'Oops! We could not find this document.';
+								documentEditor.setData('Oops! We could not find this document.');
 								document.title = 'Document error!';
 
 								return;
 							}
 
 							/**
-								* Check if a document was grabbed or not, handle errors
-								*/
+							* Check if a document was grabbed or not, handle errors
+							*/
 							if (xhr.status == '404') {
-								document.getElementById('markdownEditor').value = 'Oops! We could not find this document.';
+								documentEditor.setData('Oops! We could not find this document.');
 								document.title = 'Document error!';
 
 							} else {
 								// Input the document document
 								const content = marked(xhr.responseText, { renderer : renderer });
 
-								document.getElementById('markdownEditor').value = content;
+								documentEditor.setData(content);
 							}
 						}
 					};

@@ -25,7 +25,7 @@ module.exports = merge(webpackBase, {
       }
     }),
     new WebpackCleanupPlugin(),
-    new webpack.optimize.OccurenceOrderPlugin(),
+    new webpack.optimize.OccurrenceOrderPlugin(),
     new webpack.optimize.UglifyJsPlugin({
       compressor: {
         warnings: false
