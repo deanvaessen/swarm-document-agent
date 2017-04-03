@@ -7,17 +7,5 @@
  * { Dependencies }
  */
 
- html, body {
- 	margin: 0;
- 	height: 100%;
- 	height: 100vh;
- 	width: 100%;
- 	position: relative;
- }
-
-#app {
-	height: 100%;
-}
-
-// Project specific
-@import "styles/components";
+ // Core
+ @import "styles/core/components";

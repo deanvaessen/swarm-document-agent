@@ -1,0 +1,41 @@
+/*  body, html, main {
+	padding: 0 !important;
+} */
+
+/*  html, body {
+	margin: 0;
+	height: 100%;
+	height: 100vh;
+	width: 100%;
+	position: relative;
+} */
+
+
+/* #app {
+	height: 100%;
+} */
+
+.errorText {
+	color: red;
+	text-align: center;
+
+	ul {
+		list-style-type: none;
+		padding: 0;
+		margin: 0;
+	}
+
+	a {
+		text-decoration: none;
+		font-style: italic;
+		color: red;
+	}
+}
+
+#editPost {
+	margin-top: 40px;
+}
+
+.hidden {
+	display: none;
+}

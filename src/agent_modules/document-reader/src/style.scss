@@ -6,12 +6,6 @@
 /**
  * { Dependencies }
  */
-//@import "styles/variables";
 
-// npm depencies
-//@import "~bootstrap/scss/bootstrap";
-//@import "~font-awesome/scss/font-awesome";
-
-// Project specific
-@import "styles/global";
-@import "styles/components";
+// Core
+@import "styles/core/components";

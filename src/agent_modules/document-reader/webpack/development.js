@@ -33,9 +33,9 @@ module.exports = merge(webpackBase, {
       template: path.resolve(__dirname, '../src/index.html')
     }),
 
-    new webpack.optimize.OccurenceOrderPlugin(),
+    new webpack.optimize.OccurrenceOrderPlugin(),
     new webpack.HotModuleReplacementPlugin(),
-    new webpack.NoErrorsPlugin(),
+    new webpack.NoEmitOnErrorsPlugin(),
     new ExtractTextPlugin("style.css")
   ]
 });

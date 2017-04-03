@@ -61,12 +61,12 @@ module.exports = {
 				use: ExtractTextPlugin.extract({
 					fallback: "style-loader",
 					use: [
-							{
-								loader: 'css-loader',
-								options: {
-										modules: false
-								}
+						{
+							loader: 'css-loader',
+							options: {
+									modules: false
 							}
+						}
 					]
 				}),
 			},
@@ -75,16 +75,20 @@ module.exports = {
 				use: ExtractTextPlugin.extract({
 					fallback: "style-loader",
 					use: [
-							{
-									loader: 'css-loader',
-									options: {
-											modules: false
-									}
-							},
-							'postcss-loader',
-							'sass-loader'
+						{
+							loader: 'css-loader',
+							options: {
+									modules: false
+							}
+						},
+						'postcss-loader',
+						'sass-loader'
 					]
 				}),
+			},
+			{
+			  test: /\.(png|jpg|jpeg|gif)$/,
+			  use: [ 'url?prefix=img/&limit=5000' ]
 			},
 			{
 			  test: /\.woff(2)?(\?v=[0-9]\.[0-9]\.[0-9])?$/,
@@ -93,21 +97,24 @@ module.exports = {
 			// CKEDITOR SVG files
 			{
 			  test: /\.svg$/,
-			  include: [path.resolve(__dirname, "../node_modules/@ckeditor"), path.resolve(__dirname, "../src/helpers/core/buttons/icons")],
+			  include: [path.resolve(__dirname, "../node_modules/@ckeditor"), path.resolve(__dirname, "../src/helpers/core/buttons/")],
 			  use: [ 'raw-loader' ]
 			},
 			// Any other SVG files
 			{
 			  test: /\.(ttf|eot|svg)(\?v=[0-9]\.[0-9]\.[0-9])?$/,
-			  exclude: [path.resolve(__dirname, "../node_modules/@ckeditor"), path.resolve(__dirname, "../src/helpers/core/buttons/icons")],
+			  exclude: [path.resolve(__dirname, "../node_modules/@ckeditor"), path.resolve(__dirname, "../src/helpers/core/buttons/")],
 			  use: [ "file-loader" ]
 			},
-
 /*			{
-				test: /\.html$/,
-				loader: 'html'
+			  test: /\.(png|woff|woff2|eot|ttf|svg)/,
+			  include: [path.resolve(__dirname, "../src/helpers/core/buttons/submit"), path.resolve(__dirname, "../src/helpers/core/buttons/tomarkdown")],
+			  use: [ "url-loader?limit=100000" ]
 			},*/
-
+			{
+				test: /\.html$/,
+				use: ['html-loader']
+			}
 		],
 	},
 

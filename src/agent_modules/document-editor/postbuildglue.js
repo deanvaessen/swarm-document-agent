@@ -23,8 +23,8 @@ console.log('/document-editor/postbuildglue.js starting....')
 	ncp.limit = 16;
 
 
-	fs.createReadStream('./build/bundle.js').pipe(fs.createWriteStream('./../../../dist/modules/document-editor/documenteditor.js'));
-	fs.createReadStream('./build/bundle.nomin.js').pipe(fs.createWriteStream('./../../../dist/modules/document-editor/documenteditor.nomin.js'));
-	fs.createReadStream('./build/style.css').pipe(fs.createWriteStream('./../../../dist/modules/document-editor/editorstyle.css'));
+	fs.createReadStream('./build/bundle.js').pipe(fs.createWriteStream('./../../../dist/agent_modules/document-editor/documenteditor.js'));
+	fs.createReadStream('./build/bundle.nomin.js').pipe(fs.createWriteStream('./../../../dist/agent_modules/document-editor/documenteditor.nomin.js'));
+	fs.createReadStream('./build/style.css').pipe(fs.createWriteStream('./../../../dist/agent_modules/document-editor/editorstyle.css'));
 
 console.log('/document-editor/postbuildglue.js done!')

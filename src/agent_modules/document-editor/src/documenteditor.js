@@ -85,11 +85,13 @@ const index = (function() {
 				window.swarmagent = {};
 			}
 
+			// Configure some storage containers
 			window.swarmagent.editor = {};
-
-			//console.log(readURL, postURL);
-
-
+			window.swarmagent.editor.store = {
+				markdownMode : {
+					isActive: false
+				}
+			};
 
 			/**
 			 * { submitPost }
@@ -121,9 +123,9 @@ const index = (function() {
 					} else if (responseStatus == 200) {
 						console.log(responseText);
 
-						//const postedURL = 'index.html#' + responseText;
+						const postedURL = 'index.html#' + responseText;
 
-						//window.location.href = postedURL;
+						window.location.href = postedURL;
 					}
 				});
 			};

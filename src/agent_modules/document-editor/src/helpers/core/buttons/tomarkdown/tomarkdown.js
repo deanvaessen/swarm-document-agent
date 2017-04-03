@@ -2,6 +2,7 @@
 import Plugin from '@ckeditor/ckeditor5-core/src/plugin';
 import ToMarkdownEngine from './tomarkdownengine';
 import ButtonView from '@ckeditor/ckeditor5-ui/src/button/buttonview';
+import toMarkdownIcon from './markdown.svg';
 
 export default class ToMarkdown extends Plugin {
 	/**
@@ -27,7 +28,7 @@ export default class ToMarkdown extends Plugin {
 
 			view.set( {
 				label: t( 'ToMarkdown' ),
-				//icon: italicIcon,
+				icon: toMarkdownIcon,
 				keystroke,
 				tooltip: true,
 				withText : true
@@ -37,6 +38,11 @@ export default class ToMarkdown extends Plugin {
 
 			// Execute command.
 			this.listenTo( view, 'execute', () => editor.execute( 'ConvertToMarkdown' ) );
+
+			/*// Execute command.
+			this.editor.on( 'pluginsReady', () => {
+				this.listenTo( view, 'execute', () => editor.execute( 'ConvertToMarkdown' ) );
+			} );*/
 
 			return view;
 		} );

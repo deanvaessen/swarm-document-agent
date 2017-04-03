@@ -63,7 +63,7 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 520);
+/******/ 	return __webpack_require__(__webpack_require__.s = 522);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -34708,9 +34708,9 @@ if (true) {
 
 var toMarkdown
 var converters
-var mdConverters = __webpack_require__(517)
-var gfmConverters = __webpack_require__(515)
-var HtmlParser = __webpack_require__(516)
+var mdConverters = __webpack_require__(519)
+var gfmConverters = __webpack_require__(517)
+var HtmlParser = __webpack_require__(518)
 var collapse = __webpack_require__(492)
 
 /*
@@ -34970,7 +34970,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__style_scss__ = __webpack_require__(503);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__style_scss___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__style_scss__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__documentEditor__ = __webpack_require__(486);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_regenerator_runtime_runtime__ = __webpack_require__(514);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_regenerator_runtime_runtime__ = __webpack_require__(516);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_regenerator_runtime_runtime___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_regenerator_runtime_runtime__);
 /*******************************
  * [entry.js]
@@ -57110,10 +57110,13 @@ var index = function () {
 				window.swarmagent = {};
 			}
 
+			// Configure some storage containers
 			window.swarmagent.editor = {};
-
-			//console.log(readURL, postURL);
-
+			window.swarmagent.editor.store = {
+				markdownMode: {
+					isActive: false
+				}
+			};
 
 			/**
     * { submitPost }
@@ -57145,9 +57148,9 @@ var index = function () {
 					} else if (responseStatus == 200) {
 						console.log(responseText);
 
-						//const postedURL = 'index.html#' + responseText;
+						var postedURL = 'index.html#' + responseText;
 
-						//window.location.href = postedURL;
+						window.location.href = postedURL;
 					}
 				});
 			};
@@ -57582,7 +57585,7 @@ module.exports = [
 "use strict";
 
 
-var voidElements = __webpack_require__(518);
+var voidElements = __webpack_require__(520);
 Object.keys(voidElements).forEach(function (name) {
   voidElements[name.toUpperCase()] = 1;
 });
@@ -57726,7 +57729,10 @@ module.exports = collapseWhitespace;
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__ckeditor_ckeditor5_core_src_plugin__ = __webpack_require__(2);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__submitengine__ = __webpack_require__(495);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__ckeditor_ckeditor5_ui_src_button_buttonview__ = __webpack_require__(20);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__submit_svg__ = __webpack_require__(514);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__submit_svg___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3__submit_svg__);
 /*eslint-disable */
+
 
 
 
@@ -57755,7 +57761,7 @@ class Submit extends __WEBPACK_IMPORTED_MODULE_0__ckeditor_ckeditor5_core_src_pl
 
 			view.set( {
 				label: t( 'Submit' ),
-				//icon: italicIcon,
+				icon: __WEBPACK_IMPORTED_MODULE_3__submit_svg___default.a,
 				keystroke,
 				tooltip: true,
 				withText : true
@@ -57842,7 +57848,10 @@ class SubmitEngine extends __WEBPACK_IMPORTED_MODULE_0__ckeditor_ckeditor5_core_
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__ckeditor_ckeditor5_core_src_plugin__ = __webpack_require__(2);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__tomarkdownengine__ = __webpack_require__(498);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__ckeditor_ckeditor5_ui_src_button_buttonview__ = __webpack_require__(20);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__markdown_svg__ = __webpack_require__(515);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__markdown_svg___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3__markdown_svg__);
 /*eslint-disable */
+
 
 
 
@@ -57871,7 +57880,7 @@ class ToMarkdown extends __WEBPACK_IMPORTED_MODULE_0__ckeditor_ckeditor5_core_sr
 
 			view.set( {
 				label: t( 'ToMarkdown' ),
-				//icon: italicIcon,
+				icon: __WEBPACK_IMPORTED_MODULE_3__markdown_svg___default.a,
 				keystroke,
 				tooltip: true,
 				withText : true
@@ -57881,6 +57890,11 @@ class ToMarkdown extends __WEBPACK_IMPORTED_MODULE_0__ckeditor_ckeditor5_core_sr
 
 			// Execute command.
 			this.listenTo( view, 'execute', () => editor.execute( 'ConvertToMarkdown' ) );
+
+			/*// Execute command.
+			this.editor.on( 'pluginsReady', () => {
+				this.listenTo( view, 'execute', () => editor.execute( 'ConvertToMarkdown' ) );
+			} );*/
 
 			return view;
 		} );
@@ -57914,24 +57928,76 @@ class ToMarkdown extends __WEBPACK_IMPORTED_MODULE_0__ckeditor_ckeditor5_core_sr
 
 
 
+
+
 class ToMarkdownCommand extends __WEBPACK_IMPORTED_MODULE_0__ckeditor_ckeditor5_core_src_command_command__["a" /* default */] {
 	_doExecute() {
 
-		// Set variables
-		const editor = this.editor;
+		/**
+		 * { Variables & config }
+		 */
+		//const editor = this.editor;
+		const editor = window.swarmagent.editor.engine;
 		const post = editor.getData();
+		const store = window.swarmagent.editor.store;
+
+		__WEBPACK_IMPORTED_MODULE_2_marked___default.a.setOptions({
+			renderer: new __WEBPACK_IMPORTED_MODULE_2_marked___default.a.Renderer(),
+			gfm: true,
+			tables: true,
+			breaks: false,
+			pedantic: false,
+			sanitize: false,
+			smartLists: true,
+			smartypants: false
+		});
 
 			//const editorEngine = window.swarmagent.editor.engine;
 			//const post = editorEngine.getData();
-		const convertedPost = __WEBPACK_IMPORTED_MODULE_1_to_markdown___default()(post)
 
-		// Update on screen
-		editor.setData(convertedPost);
+		/**
+		 * { Update the UI }
+		 * Disable editing buttons
+		 */
 
-		// Disable editing buttons
-		//xx
-			//console.log(editorEngine);
-			//console.log(editorEngine.view);
+
+		// Disable editing buttons other than Markdown Mode
+		const disableCallback = ( evt, data ) => {
+			data.isEnabled = false;
+			evt.stop();
+		};
+
+		if (!store.markdownMode.isActive){
+			console.log('MarkdownMode is not active and button was pressed, so making Markdown mode active and disabling all other buttons.');
+		 	console.log(editor.getData())
+			editor.commands.forEach( ( command ) => {
+				if (command.constructor.name !== 'ToMarkdownCommand') {
+					command.on( 'refreshState', disableCallback );
+					command.refreshState();
+				}
+			} );
+
+			// Update on screen
+			editor.setData(__WEBPACK_IMPORTED_MODULE_1_to_markdown___default()(post));
+
+			store.markdownMode.isActive = true;
+
+		} else if (store.markdownMode.isActive) {
+			console.log('MarkdownMode is active and button was pressed, so making Markdown mode inactive and enabling all other buttons.');
+		 	console.log(editor.getData())
+		 	editor.commands.forEach( ( command ) => {
+				if (command.constructor.name !== 'ToMarkdownCommand') {
+					 command.off( 'refreshState', disableCallback );
+					 command.refreshState();
+				}
+			 } );
+
+
+			// Update on screen after first converting back to markdown to clear up the additional HTML
+			editor.setData(__WEBPACK_IMPORTED_MODULE_2_marked___default()(__WEBPACK_IMPORTED_MODULE_1_to_markdown___default()(post)));
+
+			store.markdownMode.isActive = false;
+		}
 	}
 }
 /* harmony export (immutable) */ __webpack_exports__["a"] = ToMarkdownCommand;
@@ -58237,6 +58303,18 @@ module.exports = "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?>\n
 
 /***/ }),
 /* 514 */
+/***/ (function(module, exports) {
+
+module.exports = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<svg width=\"12px\" height=\"16px\" viewBox=\"0 0 12 16\" version=\"1.1\" xmlns=\"http://www.w3.org/2000/svg\" xmlns:xlink=\"http://www.w3.org/1999/xlink\">\n    <!-- Generator: Sketch 40.3 (33839) - http://www.bohemiancoding.com/sketch -->\n    <title>check</title>\n    <desc>Created with Sketch.</desc>\n    <defs></defs>\n    <g id=\"Octicons\" stroke=\"none\" stroke-width=\"1\" fill=\"none\" fill-rule=\"evenodd\">\n        <g id=\"check\" fill=\"#000000\">\n            <polygon id=\"Shape\" points=\"12 5 4 13 0 9 1.5 7.5 4 10 10.5 3.5\"></polygon>\n        </g>\n    </g>\n</svg>"
+
+/***/ }),
+/* 515 */
+/***/ (function(module, exports) {
+
+module.exports = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<svg width=\"16px\" height=\"16px\" viewBox=\"0 0 16 16\" version=\"1.1\" xmlns=\"http://www.w3.org/2000/svg\" xmlns:xlink=\"http://www.w3.org/1999/xlink\">\n    <!-- Generator: Sketch 40.3 (33839) - http://www.bohemiancoding.com/sketch -->\n    <title>markdown</title>\n    <desc>Created with Sketch.</desc>\n    <defs></defs>\n    <g id=\"Octicons\" stroke=\"none\" stroke-width=\"1\" fill=\"none\" fill-rule=\"evenodd\">\n        <g id=\"markdown\" fill=\"#000000\">\n            <path d=\"M14.85,3 L1.15,3 C0.52,3 0,3.52 0,4.15 L0,11.84 C0,12.48 0.52,13 1.15,13 L14.84,13 C15.48,13 15.99,12.48 15.99,11.85 L15.99,4.15 C16,3.52 15.48,3 14.85,3 L14.85,3 Z M9,11 L7,11 L7,8 L5.5,9.92 L4,8 L4,11 L2,11 L2,5 L4,5 L5.5,7 L7,5 L9,5 L9,11 L9,11 Z M11.99,11.5 L9.5,8 L11,8 L11,5 L13,5 L13,8 L14.5,8 L11.99,11.5 L11.99,11.5 Z\" id=\"Shape\"></path>\n        </g>\n    </g>\n</svg>"
+
+/***/ }),
+/* 516 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(global, process) {/**
@@ -58966,7 +59044,7 @@ module.exports = "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?>\n
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(148), __webpack_require__(504)))
 
 /***/ }),
-/* 515 */
+/* 517 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -59083,7 +59161,7 @@ module.exports = [
 
 
 /***/ }),
-/* 516 */
+/* 518 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /*
@@ -59117,7 +59195,7 @@ function createHtmlParser () {
 
   // For Node.js environments
   if (typeof document === 'undefined') {
-    var jsdom = __webpack_require__(519)
+    var jsdom = __webpack_require__(521)
     Parser.prototype.parseFromString = function (string) {
       return jsdom.jsdom(string, {
         features: {
@@ -59165,7 +59243,7 @@ module.exports = canParseHtmlNatively() ? _window.DOMParser : createHtmlParser()
 
 
 /***/ }),
-/* 517 */
+/* 519 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -59323,7 +59401,7 @@ module.exports = [
 
 
 /***/ }),
-/* 518 */
+/* 520 */
 /***/ (function(module, exports) {
 
 /**
@@ -59352,13 +59430,13 @@ module.exports = {
 
 
 /***/ }),
-/* 519 */
+/* 521 */
 /***/ (function(module, exports) {
 
 /* (ignored) */
 
 /***/ }),
-/* 520 */
+/* 522 */
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports = __webpack_require__(271);

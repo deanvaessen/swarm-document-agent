@@ -2,6 +2,7 @@
 import Plugin from '@ckeditor/ckeditor5-core/src/plugin';
 import SubmitEngine from './submitengine';
 import ButtonView from '@ckeditor/ckeditor5-ui/src/button/buttonview';
+import submitIcon from './submit.svg';
 
 export default class Submit extends Plugin {
 	/**
@@ -27,7 +28,7 @@ export default class Submit extends Plugin {
 
 			view.set( {
 				label: t( 'Submit' ),
-				//icon: italicIcon,
+				icon: submitIcon,
 				keystroke,
 				tooltip: true,
 				withText : true
