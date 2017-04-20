@@ -1,12 +1,10 @@
-/*eslint-disable */
 import Plugin from '@ckeditor/ckeditor5-core/src/plugin';
 import SubmitCommand from './submitcommand';
 
 /**
- * The XXX engine feature.
+ * The Submit engine engine feature.
  *
- * It registers the `XXX` command and introduces the `XXX` attribute in the model which renders to the view
- * as an `<em>` element.
+ * It registers the `Submit` command
  *
  * @extends module:core/plugin~Plugin
  */

@@ -20,8 +20,6 @@
   	"lint:js": "./node_modules/.bin/eslint src; exit 0;"
   },
   "dependencies": {
-    "bootstrap": "4.0.0-alpha.6",
-    "font-awesome": "^4.7.0",
     "autoprefixer": "^6.3.7",
     "babel-cli": "^6.18.0",
     "babel-core": "^6.23.1",

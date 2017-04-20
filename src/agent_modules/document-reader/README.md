@@ -43,7 +43,7 @@ I suggest building from the project root folder 3 folders back up the directory 
 
 2. The index.html file also includes an extra error condition (users browsing to the app location and not a fragment).
 
-3. In case you want to extend this app further in the future as a module of a larger framework, you can use the development set-up to import/require the markdownreader.js file in source and initiate the app as follows:  ``markdownReader.init(UrlForFetching)``
+3. In case you want to extend this app further in the future as a module of a larger framework, you can use the development set-up to import/require the documentreader.js file in source and initiate the app as follows:  ``documentReader.init(UrlForFetching)``
 
 4. The argument it takes is the readURL for the location of the files. If the user does not call this, it has a default fallback included. See "entry.js" in *src* to see how I initiated it (uncomment the markdownReader.init line).
 5. The development/build environment used to here is a webpack dev server on top of Node.JS to run the Javascript. Webpack compresses, validates (lints) and optimises the files, among other things. This environment has been set up to make development easy, quick and extendible future updates. The inclusion of webpack means development can rely on individual Javascript 'modules' to keep the structure of the application clear.
@@ -51,7 +51,7 @@ I suggest building from the project root folder 3 folders back up the directory 
 <br />
 
 ### In-app Testing ###
-* Test suite available in ``/repository/md/testsuite.md`` (+other .md files). I have included tests and warnings for various issues (illegal characters, missing files).
+* Test suite available in ``./markdowntests/testsuite.md`` (+other .md files). I have included tests and warnings for various issues (illegal characters, missing files).
 
 <br />
 

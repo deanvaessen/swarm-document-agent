@@ -1,6 +1,6 @@
 {
 	"name": "swarm-document-agent",
-	"version": "0.8.0",
+	"version": "1.1.0",
 	"description": "Development environment for swarm-markdown-agent",
 	"keywords": [],
 	"author": "Dean Vaessen <hello@deanvaessen.com>",

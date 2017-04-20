@@ -12,7 +12,7 @@
 
 	// The app
 	/*eslint-disable */
-	import markdownReader from './markdownreader';
+	import documentReader from './documentreader';
 	/*eslint-enable */
 
 /**
@@ -20,5 +20,5 @@
  * Initiate the app with the location of the files (baseURL).
  */
 
-//markdownReader.init('./repository/md/');
+//documentReader.init('./repository/md/');
 

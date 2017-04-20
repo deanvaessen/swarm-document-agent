@@ -1,4 +1,3 @@
-/*eslint-disable */
 import Plugin from '@ckeditor/ckeditor5-core/src/plugin';
 import SubmitEngine from './submitengine';
 import ButtonView from '@ckeditor/ckeditor5-ui/src/button/buttonview';
@@ -21,16 +20,15 @@ export default class Submit extends Plugin {
 		const command = editor.commands.get( 'SubmitDocument' );
 		const keystroke = 'CTRL+ENTER';
 
-
 		// Add a submit button button to feature components.
 		editor.ui.componentFactory.add( 'submit', ( locale ) => {
 			const view = new ButtonView( locale );
 
 			view.set( {
-				label: t( 'Submit' ),
-				icon: submitIcon,
+				label : t( 'Submit' ),
+				icon : submitIcon,
 				keystroke,
-				tooltip: true,
+				tooltip : true,
 				withText : true
 			} );
 
@@ -46,5 +44,3 @@ export default class Submit extends Plugin {
 		editor.keystrokes.set( keystroke, 'SubmitDocument' );
 	}
 }
-
-

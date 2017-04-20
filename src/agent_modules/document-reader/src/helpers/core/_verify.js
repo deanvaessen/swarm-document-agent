@@ -70,7 +70,8 @@
 
 			// Test for HTML content types
 			if (requestContentType.indexOf('text/html') != -1) {
-				contentTypeVerification.error = 'Oops, you tried to load an HTML document';
+				//contentTypeVerification.error = 'Oops, you tried to load an HTML document';
+				contentTypeVerification.error = 'Oops, we could not load this document.';
 				return contentTypeVerification;
 			}
 

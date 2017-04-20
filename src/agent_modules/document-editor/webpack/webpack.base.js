@@ -88,7 +88,7 @@ module.exports = {
 			},
 			{
 			  test: /\.(png|jpg|jpeg|gif)$/,
-			  use: [ 'url?prefix=img/&limit=5000' ]
+			  use: [ 'url?prefix=img/&limit=2000' ]
 			},
 			{
 			  test: /\.woff(2)?(\?v=[0-9]\.[0-9]\.[0-9])?$/,

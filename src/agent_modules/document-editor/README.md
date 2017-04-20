@@ -3,7 +3,7 @@
 ## Documentation
 
 ### Outline ###
-* User clicks "edit" in markdown reader when a fragment is active. The page then moves to edit.html#*fragment*.
+* User clicks "edit" in document-reader when a fragment is active. The page then moves to edit.html#*fragment*.
 * The editor captures the fragment string, asks the swarm for the markdown file.
 * For CKEDITOR to read it, it needs to be converted to HTML. Which it does. At that point it pops it onto the page in the CKEDITOR text field, and you can edit it as you want. 
 * At the end, user can click submit and it will post a converted markdown file to the swarm. Once done, it receives back a string that represents the location of the new markdown file in the swarm and the application navigates to that location.
@@ -44,7 +44,7 @@ I suggest building from the project root folder 3 folders back up the directory 
 
 <br />
 
-``markdownEditor.init(UrlForPosting, UrlForFetching)``
+``documentEditor.init(UrlForPosting, UrlForFetching)``
 
 <br />
 <br />

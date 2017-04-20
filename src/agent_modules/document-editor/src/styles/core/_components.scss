@@ -1,6 +1,6 @@
-.contentFieldForm, .ck-editor, .ck-editor__main{
-	//height: 100% !important;
-}
+/* .contentFieldForm, .ck-editor, .ck-editor__main{
+	height: 100% !important;
+} */
 
 .ck-editor, .ck-editor-bottom {
 	border: 0 !important;
@@ -16,4 +16,29 @@ body, html, main {
 
 .ckeditor {
 	background: #fafafa;
+}
+
+.hidden {
+	display: none;
+}
+
+#markdownField{
+	display: none;
+	border: 0 !important;
+	width:100%;
+	padding-top: 1.5em;
+	margin: 0 !important;
+	height: 95vh !important;
+	background: #fafafa !important;
+	font: 100 16px 'Source Sans Pro', 'Helvetica Neue', arial, sans-serif !important;
+	color: #111 !important;
+	resize: none !important;
+}
+
+// Override d-app styles
+::selection {
+  background-color: #3297FD  !important; /* WebKit/Blink Browsers */
+}
+::-moz-selection {
+  background-color: #3399FF !important; /* Gecko Browsers */
 }

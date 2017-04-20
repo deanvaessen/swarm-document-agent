@@ -21,6 +21,7 @@
 	import Paragraph from '@ckeditor/ckeditor5-paragraph/src/paragraph';
 	import Undo from '@ckeditor/ckeditor5-undo/src/undo';
 	import Bold from '@ckeditor/ckeditor5-basic-styles/src/bold';
+	import Clipboard from '@ckeditor/ckeditor5-clipboard/src/clipboard';
 	import Italic from '@ckeditor/ckeditor5-basic-styles/src/italic';
 	import Image from '@ckeditor/ckeditor5-image/src/image';
 	import List from '@ckeditor/ckeditor5-list/src/list';
@@ -94,48 +95,11 @@ const index = (function() {
 			};
 
 			/**
-			 * { submitPost }
-			 * Post submition method
-			 */
-
-			 // Attach it to our namespace
-			window.swarmagent.editor.submitPost = (post) => {
-				//console.log('I am posting....');
-				//console.log(post);
-
-				// Convert to markdown
-				const convertedPost = toMarkdown(post);
-
-				//console.log('Converted post:');
-				//console.log(convertedPost);
-
-				// Post to a URL
-				support.communicate.post(convertedPost, postURL, (responseText, responseStatus) => {
-					// Callback to navigate to URL
-						//console.log('responseText:', responseText);
-						//console.log('responseStatus:', responseStatus);
-
-					if (responseStatus != 200){
-							//document.getElementById('contentField').value = 'Oops! We could not post this document. <br /> Error: <br />' + responseText;
-						documentEditor.setData(`Oops! We could not post this document. <br /> Error: <br /> ${responseText}`);
-
-						document.title = 'Post error!';
-					} else if (responseStatus == 200) {
-						console.log(responseText);
-
-						const postedURL = 'index.html#' + responseText;
-
-						window.location.href = postedURL;
-					}
-				});
-			};
-
-			/**
 			 * { CKEDITOR }
 			 * Init the editor on page and set up submit button
 			 */
 			try {
-				ClassicEditor.create(document.querySelector('#contentField'), {
+				ClassicEditor.create(document.querySelector('#ckeditor'), {
 					plugins : [
 							//Autoformat,
 							//ArticlePreset,
@@ -150,7 +114,8 @@ const index = (function() {
 							Link,
 							List,
 							Submit,
-							ToMarkdown
+							ToMarkdown,
+							Clipboard
 						],
 						toolbar: [
 							'headings',
@@ -181,7 +146,7 @@ const index = (function() {
 			}
 
 			function showCompatibilityMessage() {
-				const editorElement = document.querySelector('#contentField');
+				const editorElement = document.querySelector('#ckeditor');
 				const message = document.createElement('p');
 
 				message.innerHTML = `
@@ -193,10 +158,46 @@ const index = (function() {
 
 				message.classList.add('message');
 
-				editorElement.style.display = 'none';
+				//editorElement.style.display = 'none';
 				editorElement.parentNode.insertBefore(message, editorElement);
 			}
 
+			/**
+			 * { submitPost }
+			 * Post submition method
+			 */
+
+			 // Attach it to our namespace
+			window.swarmagent.editor.submitPost = (post) => {
+				//console.log('I am posting....');
+				//console.log(post);
+
+				// Convert to markdown
+				const convertedPost = toMarkdown(post);
+
+				//console.log('Converted post:');
+				//console.log(convertedPost);
+
+				// Post to a URL
+				support.communicate.post(convertedPost, postURL, (responseText, responseStatus) => {
+					// Callback to navigate to URL
+						//console.log('responseText:', responseText);
+						//console.log('responseStatus:', responseStatus);
+
+					if (responseStatus != 200){
+							//document.getElementById('contentField').value = 'Oops! We could not post this document. <br /> Error: <br />' + responseText;
+						documentEditor.setData(`Oops! We could not post this document. <br /> Error: <br /> ${responseText}`);
+
+						document.title = 'Post error!';
+					} else if (responseStatus == 200) {
+						//console.log(responseText);
+
+						const postedURL = 'index.html#' + responseText;
+
+						window.location.href = postedURL;
+					}
+				});
+			};
 
 
 			/**
@@ -234,10 +235,10 @@ const index = (function() {
 								contentValidityError = contentTypeVerification.error;
 
 							if (!validContentType && xhr.status != '404') {
-								console.log(contentValidityError);
+								//console.log(contentValidityError);
 
-								documentEditor.setData('Oops! We could not find this document.');
 								document.title = 'Document error!';
+								documentEditor.setData('Oops! We could not find this document.');
 
 								return;
 							}
@@ -246,13 +247,12 @@ const index = (function() {
 							* Check if a document was grabbed or not, handle errors
 							*/
 							if (xhr.status == '404') {
-								documentEditor.setData('Oops! We could not find this document.');
 								document.title = 'Document error!';
+								documentEditor.setData('Oops! We could not find this document.');
 
 							} else {
 								// Input the document document
 								const content = marked(xhr.responseText, { renderer : renderer });
-
 								documentEditor.setData(content);
 							}
 						}
@@ -267,11 +267,11 @@ const index = (function() {
 				}
 			};
 
-		// Set the fragmentChange function to run each time the window on hash event fires
-		window.onhashchange = fragmentRequest;
+			// Set the fragmentChange function to run each time the window on hash event fires
+			window.onhashchange = fragmentRequest;
 
-		// Run the function
-		fragmentRequest();
+			// Run the function
+			fragmentRequest();
 		});
 	}());
 

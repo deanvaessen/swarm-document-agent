@@ -96,21 +96,22 @@ const index = (function() {
 								}
 
 								// Check content type to filter out HTML documents
-								// (mind that a 404 always returns an html document so filter)
+								// A 404 always returns an html document so we need to include this step here.
 								const requestContentType = this.getResponseHeader('content-type'),
 									contentTypeVerification = support.verify.contentType(requestContentType),
-									validContentType = contentTypeVerification.validity;
-									//contentValidityError = contentTypeVerification.error;
+									validContentType = contentTypeVerification.validity,
+									contentValidityError = contentTypeVerification.error;
 
-								if (!validContentType && xhr.status != '404') {
-	/*								// Clear previous content
+								//if (!validContentType && xhr.status != '404') {
+								if (!validContentType) {
+									// Clear previous content
 									support.render.clearContent();
 
 									// Render an error
 									document.getElementById('app__error').innerHTML =
 									marked('# Oops! \n\n' + contentValidityError);
 
-									document.title = 'Document error!'; */
+									document.title = 'Document error!';
 
 									return;
 								}
