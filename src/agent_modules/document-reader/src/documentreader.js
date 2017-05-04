@@ -56,6 +56,9 @@ const index = (function() {
 					 * Set up the markdown render options
 					 */
 					const renderer = new marked.Renderer();
+					renderer.heading = function(text, level) {
+						return `<h${level}>${text}</h${level}>`;
+					};
 
 					/**
 					 * Grab a document and render it to the container
@@ -170,8 +173,7 @@ const index = (function() {
 
 			// Run the function
 			fragmentRequest();
-			});
-
+		});
 	}());
 
 	return {

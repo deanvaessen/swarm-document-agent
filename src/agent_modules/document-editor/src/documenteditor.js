@@ -2,7 +2,7 @@
  * [documenteditor.js]
  * The core markdown-editor js file.
  ******************************/
-/*eslint-disable */
+
 /**
 * { Dependencies }
 */
@@ -32,29 +32,40 @@
 	import Submit from './helpers/core/buttons/submit/submit';
 	import ToMarkdown from './helpers/core/buttons/tomarkdown/tomarkdown';
 
-
 /**
 * { App }
 */
 const index = (function() {
-
-	let test = {
-		postURL : null,
-		readURL: null
-	};
 
 	/**
 	* { Init }
 	* Init the app
 	*/
 	const init = (function(requestedPostURL, requestedReadURL) {
+
 		/**
 		* { Variables }
 		*/
-		let postURL, readURL, documentEditor;
+			/*eslint-disable */
+			let postURL, readURL, documentEditor;
+			/*eslint-enable */
 
 			//Set up the markdown render options
 			const renderer = new marked.Renderer();
+			renderer.heading = function(text, level) {
+				return `<h${level}>${text}</h${level}>`;
+			};
+
+			marked.setOptions({
+				renderer : renderer,
+				gfm : true,
+				tables : true,
+				breaks : true,
+				pedantic : false,
+				sanitize : false,
+				smartLists : true,
+				smartypants : false
+			});
 
 		/**
 		 * Grab configuration items
@@ -80,7 +91,6 @@ const index = (function() {
 				postURL = editorConfigurationObject.postURL;
 			}
 
-
 			// Set up the editor in the window object so we can access it from our buttons
 			if (!window.swarmagent){
 				window.swarmagent = {};
@@ -90,9 +100,29 @@ const index = (function() {
 			window.swarmagent.editor = {};
 			window.swarmagent.editor.store = {
 				markdownMode : {
-					isActive: false
+					isActive : false
 				}
 			};
+
+			/**
+			 * { Markdown Text Area }
+			 * Init the editor on page and set up submit button
+			 */
+			// Set up the markdown text area
+			(function() {
+				var textContainer, textareaSize, input;
+				var autoSize = function() {
+					// also can use textContent or innerText
+					textareaSize.innerHTML = input.value + '\n';
+				};
+
+				textContainer = document.querySelector('.textarea-container');
+				textareaSize = textContainer.querySelector('.textarea-size');
+				input = textContainer.querySelector('textarea');
+
+				autoSize();
+				input.addEventListener('input', autoSize);
+			})();
 
 			/**
 			 * { CKEDITOR }
@@ -100,6 +130,14 @@ const index = (function() {
 			 */
 			try {
 				ClassicEditor.create(document.querySelector('#ckeditor'), {
+					heading : {
+						options : [
+							{ modelElement : 'paragraph', title : 'Paragraph', class : 'ck-heading_paragraph' },
+							{ modelElement : 'heading1', viewElement : 'h1', title : 'Heading 1', class : 'ck-heading_heading1' },
+							{ modelElement : 'heading2', viewElement : 'h2', title : 'Heading 2', class : 'ck-heading_heading2' },
+							{ modelElement : 'heading3', viewElement : 'h3', title : 'Heading 3', class : 'ck-heading_heading3' }
+						]
+					},
 					plugins : [
 							//Autoformat,
 							//ArticlePreset,
@@ -117,7 +155,7 @@ const index = (function() {
 							ToMarkdown,
 							Clipboard
 						],
-						toolbar: [
+						toolbar : [
 							'headings',
 							'bold',
 							'italic',
@@ -129,7 +167,7 @@ const index = (function() {
 							'redo',
 							'submit',
 							'toMarkdown',
-						 ]
+						]
 				}).then((editor) => {
 					// Make it available to the rest of the app
 					window.swarmagent.editor.engine = editor;
@@ -167,16 +205,16 @@ const index = (function() {
 			 * Post submition method
 			 */
 
-			 // Attach it to our namespace
+			// Attach it to our namespace
 			window.swarmagent.editor.submitPost = (post) => {
 				//console.log('I am posting....');
 				//console.log(post);
 
 				// Convert to markdown
-				const convertedPost = toMarkdown(post);
+				const convertedPost = toMarkdown(post, { gfm : true });
 
 				//console.log('Converted post:');
-				//console.log(convertedPost);
+				console.log(convertedPost);
 
 				// Post to a URL
 				support.communicate.post(convertedPost, postURL, (responseText, responseStatus) => {
@@ -198,7 +236,6 @@ const index = (function() {
 					}
 				});
 			};
-
 
 			/**
 			 * { catch a fragmentRequest }
@@ -231,8 +268,8 @@ const index = (function() {
 							// (mind that a 404 always returns an html document so filter)
 							const requestContentType = this.getResponseHeader('content-type'),
 								contentTypeVerification = support.verify.contentType(requestContentType),
-								validContentType = contentTypeVerification.validity,
-								contentValidityError = contentTypeVerification.error;
+								validContentType = contentTypeVerification.validity;
+								//contentValidityError = contentTypeVerification.error;
 
 							if (!validContentType && xhr.status != '404') {
 								//console.log(contentValidityError);
@@ -253,6 +290,8 @@ const index = (function() {
 							} else {
 								// Input the document document
 								const content = marked(xhr.responseText, { renderer : renderer });
+								//const content = marked.parser(lexer.lex(xhr.responseText), options);
+								console.log(content);
 								documentEditor.setData(content);
 							}
 						}

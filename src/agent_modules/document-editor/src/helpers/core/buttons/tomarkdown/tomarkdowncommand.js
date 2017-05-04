@@ -20,14 +20,50 @@ export default class ToMarkdownCommand extends Command {
 		/**
 		 * { Variables & config }
 		 */
-		//const editor = this.editor;
-		const editor = window.swarmagent.editor.engine;
-		const post = editor.getData();
-		const store = window.swarmagent.editor.store;
+		// Editor
+			//const editor = this.editor;
+			const editor = window.swarmagent.editor.engine;
+			const post = editor.getData();
+			const store = window.swarmagent.editor.store;
+
+		// Marked
+		const renderer = new marked.Renderer();
+		renderer.heading = function(text, level) {
+			return `<h${level}>${text}</h${level}>`;
+		};
 
 		marked.setOptions({
-			renderer : new marked.Renderer()
+			renderer : renderer,
+			gfm : true,
+			tables : true,
+			breaks : true,
+			pedantic : false,
+			sanitize : false,
+			smartLists : true,
+			smartypants : false
 		});
+
+		marked.Lexer.prototype.lex = function(src) {
+			src = src
+				.replace(/\r\n|\r/g, '\n')
+				.replace(/\t/g, '    ')
+				.replace(/\u2424/g, '\n');
+
+			return this.token(src, true);
+		};
+
+/*		lexer = new marked.Lexer(options);
+
+		lexer.rules.heading = { exec: function() {} };
+
+		marked.Lexer.prototype.lex = (src) => {
+			src = src
+				.replace(/\r\n|\r/g, '\n')
+				.replace(/\t/g, '    ')
+				.replace(/\u2424/g, '\n');
+
+			return this.token(src, true);
+		};*/
 
 			//const editorEngine = window.swarmagent.editor.engine;
 			//const post = editorEngine.getData();
@@ -60,11 +96,26 @@ export default class ToMarkdownCommand extends Command {
 				const ckeditorContentElement = document.getElementsByClassName('ck-editor__main')[0];
 				const markdownFieldElement = document.getElementById('markdownField');
 
-				markdownFieldElement.value = toMarkdown(post);
+/*				console.log('post');
+				console.log(post);
+				console.log('toMarkdown(post)');
+				console.log(toMarkdown(post));*/
+
+				markdownFieldElement.value = toMarkdown(post, { gfm : true });
 				ckeditorContentElement.style.display = 'none';
 				markdownFieldElement.style.display = 'block';
 
-			store.markdownMode.isActive = true;
+				// Send an event so that the text field can capture the input and grow
+				/*eslint-disable */
+				const event = new Event('input', {
+				    'bubbles': true,
+				    'cancelable': true
+				});
+
+				markdownFieldElement.dispatchEvent(event);
+				store.markdownMode.isActive = true;
+
+				/*eslint-enable */
 
 		} else if (store.markdownMode.isActive) {
 			editor.commands.forEach( ( command ) => {
@@ -81,7 +132,13 @@ export default class ToMarkdownCommand extends Command {
 			ckeditorContentElement.style.display = 'block';
 			markdownFieldElement.style.display = 'none';
 
+/*			console.log('editedMarkdown');
+			console.log(editedMarkdown);
+			console.log('marked(editedMarkdown)');
+			console.log(marked(editedMarkdown));*/
+
 			editor.setData(marked(editedMarkdown));
+			//editor.setData(marked.parser(lexer.lex(editedMarkdown)), options);
 
 			store.markdownMode.isActive = false;
 		}

@@ -151,6 +151,9 @@ var index = function () {
       * Set up the markdown render options
       */
 					var renderer = new _marked2.default.Renderer();
+					renderer.heading = function (text, level) {
+						return '<h' + level + '>' + text + '</h' + level + '>';
+					};
 
 					/**
       * Grab a document and render it to the container
