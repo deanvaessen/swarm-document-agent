@@ -59411,6 +59411,7 @@ function isInsideNestedEditable( element ) {
 
 
 // Vendor functions
+//  Markdown
 
 
 
@@ -59517,7 +59518,6 @@ var index = function () {
 				var autoSize = function autoSize() {
 					// also can use textContent or innerText
 					textareaSize.innerHTML = input.value + '\n';
-					console.log('l');
 				};
 
 				textContainer = document.querySelector('.textarea-container');
@@ -59549,31 +59549,6 @@ var index = function () {
 
 					// Set a welcome text
 					documentEditor.setData('<h2>What would you like to share?</h2>');
-
-					/*					var testdoc = `
-     					if (hardThroughputBrouter <= 5) {
-     					    laserHandleUdp += -3 + cleanDpiAddress + voip;
-     					    input_zebibyte_edutainment = plug_ttl_state;
-     					} else {
-     					    publishing_language_half(3 - tween, shortcut);
-     					    sshHdvGigabyte(aclPharming, kibibyte, ad * public);
-     					}
-     					social.orientation_dvi_systray(vertical.case.northbridgeServiceClient(
-     					        system_requirements, seo + 440195, 1), hypermedia);
-     					if (index_bus) {
-     					    spywareThermistorWrap = control(manet_lpi_readme(encodingDenial, 82,
-     					            framework_supply_website), parse);
-     					    qbe_data.ad_facebook(toolbarApplicationRight.installJava(100));
-     					    cardIrq(leaf_on + webmaster_status_lun, 24);
-     					} else {
-     					    soft_captcha = kilohertz_domain * 3;
-     					    computing = gate(readerCaseMicrophone(address),
-     					            symbolicGpuDot.vectorBig(2));
-     					    keywords_vram_streaming.softwareSyntaxDigital(analyst);
-     					}
-     					`;
-     					console.log(marked(testdoc, { renderer : renderer }));
-     					console.log('------');*/
 				}).catch(function (err) {
 					console.error(err.stack);
 				});
@@ -59597,32 +59572,18 @@ var index = function () {
     * { submitPost }
     * Post submition method
     */
-
-			// Attach it to our namespace
 			window.swarmagent.editor.submitPost = function (post) {
-				//console.log('I am posting....');
-				//console.log(post);
 
-				// Convert to markdown
 				var convertedPost = __WEBPACK_IMPORTED_MODULE_1_to_markdown___default()(post, { gfm: true });
 
-				//console.log('Converted post:');
-				console.log(convertedPost);
-
-				// Post to a URL
+				// Post to a URL & navigate
 				__WEBPACK_IMPORTED_MODULE_0__helpers_core_index_js__["a" /* default */].communicate.post(convertedPost, postURL, function (responseText, responseStatus) {
 					// Callback to navigate to URL
-					//console.log('responseText:', responseText);
-					//console.log('responseStatus:', responseStatus);
-
 					if (responseStatus != 200) {
-						//document.getElementById('contentField').value = 'Oops! We could not post this document. <br /> Error: <br />' + responseText;
 						documentEditor.setData('Oops! We could not post this document. <br /> Error: <br /> ' + responseText);
 
 						document.title = 'Post error!';
 					} else if (responseStatus == 200) {
-						//console.log(responseText);
-
 						var postedURL = 'index.html#' + responseText;
 
 						window.location.href = postedURL;
@@ -59656,7 +59617,7 @@ var index = function () {
 								/**
          *
          * Verify URL to check for illegal characters
-         * Verify content type to filter out HTML
+         * & verify content type to filter out HTML
          */
 								// Check content type to filter out HTML documents
 								// (mind that a 404 always returns an html document so filter)
@@ -59666,7 +59627,6 @@ var index = function () {
 								//contentValidityError = contentTypeVerification.error;
 
 								if (!validContentType && xhr.status != '404') {
-									//console.log(contentValidityError);
 
 									document.title = 'Document error!';
 									documentEditor.setData('Oops! We could not find this document.');
@@ -59683,8 +59643,7 @@ var index = function () {
 								} else {
 									// Input the document document
 									var content = __WEBPACK_IMPORTED_MODULE_2_marked___default()(xhr.responseText, { renderer: renderer });
-									//const content = marked.parser(lexer.lex(xhr.responseText), options);
-									console.log(content);
+
 									documentEditor.setData(content);
 								}
 							}
@@ -60320,11 +60279,6 @@ class ToMarkdown extends __WEBPACK_IMPORTED_MODULE_0__ckeditor_ckeditor5_core_sr
 
 			// Execute command.
 			this.listenTo( view, 'execute', () => editor.execute( 'ConvertToMarkdown' ) );
-
-			/*// Execute command.
-			this.editor.on( 'pluginsReady', () => {
-				this.listenTo( view, 'execute', () => editor.execute( 'ConvertToMarkdown' ) );
-			} );*/
 
 			return view;
 		} );

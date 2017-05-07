@@ -39,11 +39,6 @@ export default class ToMarkdown extends Plugin {
 			// Execute command.
 			this.listenTo( view, 'execute', () => editor.execute( 'ConvertToMarkdown' ) );
 
-			/*// Execute command.
-			this.editor.on( 'pluginsReady', () => {
-				this.listenTo( view, 'execute', () => editor.execute( 'ConvertToMarkdown' ) );
-			} );*/
-
 			return view;
 		} );
 

@@ -10,27 +10,28 @@
 	import support from './helpers/core/index.js';
 
 	// Vendor functions
-	import toMarkdown from 'to-markdown';
-	import marked from 'marked';
+			//  Markdown
+			import toMarkdown from 'to-markdown';
+			import marked from 'marked';
 
 	//CKEDITOR
 	import ClassicEditor from '@ckeditor/ckeditor5-editor-classic/src/classic';
 
-	import Enter from '@ckeditor/ckeditor5-enter/src/enter';
-	import Typing from '@ckeditor/ckeditor5-typing/src/typing';
-	import Paragraph from '@ckeditor/ckeditor5-paragraph/src/paragraph';
-	import Undo from '@ckeditor/ckeditor5-undo/src/undo';
-	import Bold from '@ckeditor/ckeditor5-basic-styles/src/bold';
-	import Clipboard from '@ckeditor/ckeditor5-clipboard/src/clipboard';
-	import Italic from '@ckeditor/ckeditor5-basic-styles/src/italic';
-	import Image from '@ckeditor/ckeditor5-image/src/image';
-	import List from '@ckeditor/ckeditor5-list/src/list';
-	import Link from '@ckeditor/ckeditor5-link/src/link';
-	import Headings from '@ckeditor/ckeditor5-heading/src/heading';
+		import Enter from '@ckeditor/ckeditor5-enter/src/enter';
+		import Typing from '@ckeditor/ckeditor5-typing/src/typing';
+		import Paragraph from '@ckeditor/ckeditor5-paragraph/src/paragraph';
+		import Undo from '@ckeditor/ckeditor5-undo/src/undo';
+		import Bold from '@ckeditor/ckeditor5-basic-styles/src/bold';
+		import Clipboard from '@ckeditor/ckeditor5-clipboard/src/clipboard';
+		import Italic from '@ckeditor/ckeditor5-basic-styles/src/italic';
+		import Image from '@ckeditor/ckeditor5-image/src/image';
+		import List from '@ckeditor/ckeditor5-list/src/list';
+		import Link from '@ckeditor/ckeditor5-link/src/link';
+		import Headings from '@ckeditor/ckeditor5-heading/src/heading';
 
-	// Custom buttons
-	import Submit from './helpers/core/buttons/submit/submit';
-	import ToMarkdown from './helpers/core/buttons/tomarkdown/tomarkdown';
+		// Custom buttons
+		import Submit from './helpers/core/buttons/submit/submit';
+		import ToMarkdown from './helpers/core/buttons/tomarkdown/tomarkdown';
 
 /**
 * { App }
@@ -108,7 +109,6 @@ const index = (function() {
 			 * { Markdown Text Area }
 			 * Init the editor on page and set up submit button
 			 */
-			// Set up the markdown text area
 			(function() {
 				var textContainer, textareaSize, input;
 				var autoSize = function() {
@@ -196,7 +196,6 @@ const index = (function() {
 
 				message.classList.add('message');
 
-				//editorElement.style.display = 'none';
 				editorElement.parentNode.insertBefore(message, editorElement);
 			}
 
@@ -204,32 +203,18 @@ const index = (function() {
 			 * { submitPost }
 			 * Post submition method
 			 */
-
-			// Attach it to our namespace
 			window.swarmagent.editor.submitPost = (post) => {
-				//console.log('I am posting....');
-				//console.log(post);
 
-				// Convert to markdown
 				const convertedPost = toMarkdown(post, { gfm : true });
 
-				//console.log('Converted post:');
-				console.log(convertedPost);
-
-				// Post to a URL
+				// Post to a URL & navigate
 				support.communicate.post(convertedPost, postURL, (responseText, responseStatus) => {
 					// Callback to navigate to URL
-						//console.log('responseText:', responseText);
-						//console.log('responseStatus:', responseStatus);
-
 					if (responseStatus != 200){
-							//document.getElementById('contentField').value = 'Oops! We could not post this document. <br /> Error: <br />' + responseText;
 						documentEditor.setData(`Oops! We could not post this document. <br /> Error: <br /> ${responseText}`);
 
 						document.title = 'Post error!';
 					} else if (responseStatus == 200) {
-						//console.log(responseText);
-
 						const postedURL = 'index.html#' + responseText;
 
 						window.location.href = postedURL;
@@ -262,7 +247,7 @@ const index = (function() {
 						/**
 						 *
 						 * Verify URL to check for illegal characters
-						 * Verify content type to filter out HTML
+						 * & verify content type to filter out HTML
 						 */
 							// Check content type to filter out HTML documents
 							// (mind that a 404 always returns an html document so filter)
@@ -272,8 +257,6 @@ const index = (function() {
 								//contentValidityError = contentTypeVerification.error;
 
 							if (!validContentType && xhr.status != '404') {
-								//console.log(contentValidityError);
-
 								document.title = 'Document error!';
 								documentEditor.setData('Oops! We could not find this document.');
 
@@ -290,8 +273,6 @@ const index = (function() {
 							} else {
 								// Input the document document
 								const content = marked(xhr.responseText, { renderer : renderer });
-								//const content = marked.parser(lexer.lex(xhr.responseText), options);
-								console.log(content);
 								documentEditor.setData(content);
 							}
 						}
@@ -306,10 +287,8 @@ const index = (function() {
 				}
 			};
 
-			// Set the fragmentChange function to run each time the window on hash event fires
+			// Set the fragmentChange function to run each time the window on hash event fires, then run
 			window.onhashchange = fragmentRequest;
-
-			// Run the function
 			fragmentRequest();
 		});
 	}());
