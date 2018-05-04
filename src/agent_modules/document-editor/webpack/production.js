@@ -7,6 +7,7 @@ var WebpackCleanupPlugin = require('webpack-cleanup-plugin');
 var webpackBase = require('./webpack.base.js');
 
 var UnminifiedWebpackPlugin = require('unminified-webpack-plugin');
+const UglifyJSPlugin = require('uglifyjs-webpack-plugin')
 
 var ExtractTextPlugin = require("extract-text-webpack-plugin");
 
@@ -26,11 +27,13 @@ module.exports = merge(webpackBase, {
     }),
     new WebpackCleanupPlugin(),
     new webpack.optimize.OccurrenceOrderPlugin(),
-    new webpack.optimize.UglifyJsPlugin({
+    /*new webpack.optimize.UglifyJsPlugin({
       compressor: {
         warnings: false
       }
     }),
+    */
+    new UglifyJSPlugin(),
     new UnminifiedWebpackPlugin(),
     new ExtractTextPlugin("style.css")
   ]

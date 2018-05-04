@@ -15,7 +15,7 @@
   "scripts": {
     "start": "webpack-dev-server --config webpack/development.js --colors --history-api-fallback --inline --progress",
     "build": "npm run init-build && npm run post-build",
-    "init-build": "webpack --config webpack/production.js -p --progress",
+    "init-build": "webpack --config webpack/production.js --progress",
     "post-build": "node postbuildglue.js --exec babel-node --presets es2015,stage-2",
     "lint:js": "./node_modules/.bin/eslint src; exit 0;"
   },
@@ -67,7 +67,7 @@
     "source-map-loader": "^0.1.5",
     "style-loader": "^0.13.2",
     "to-markdown": "^3.0.3",
-    "uglify-js": "git+https://github.com/mishoo/UglifyJS2.git#harmony",
+    "uglify-js": "2.8.14",
     "unminified-webpack-plugin": "^1.2.0",
     "url-loader": "^0.5.7",
     "webpack": "^2.2.1",
@@ -75,5 +75,7 @@
     "webpack-dev-server": "^2.4.1",
     "webpack-merge": "^4.0.0"
   },
-  "devDependencies": {}
+  "devDependencies": {
+    "uglifyjs-webpack-plugin": "^1.2.5"
+  }
 }
