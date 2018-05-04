@@ -30,6 +30,7 @@
 		import Headings from '@ckeditor/ckeditor5-heading/src/heading';
 
 		// Custom buttons
+		import Encrypt from './helpers/core/buttons/encrypt/encrypt';
 		import Submit from './helpers/core/buttons/submit/submit';
 		import ToMarkdown from './helpers/core/buttons/tomarkdown/tomarkdown';
 
@@ -102,7 +103,8 @@ const index = (function() {
 			window.swarmagent.editor.store = {
 				markdownMode : {
 					isActive : false
-				}
+				},
+				encrypted : false
 			};
 
 			/**
@@ -153,6 +155,7 @@ const index = (function() {
 							List,
 							Submit,
 							ToMarkdown,
+							Encrypt,
 							Clipboard
 						],
 						toolbar : [
@@ -167,6 +170,7 @@ const index = (function() {
 							'redo',
 							'submit',
 							'toMarkdown',
+							'encrypt'
 						]
 				}).then((editor) => {
 					// Make it available to the rest of the app
@@ -206,9 +210,13 @@ const index = (function() {
 			window.swarmagent.editor.submitPost = (post) => {
 
 				const convertedPost = toMarkdown(post, { gfm : true });
+				const shouldEncrypt = window.swarmagent.editor.store.encrypted;
+				let postTo = postURL;
+
+				if ( shouldEncrypt ) postTo = postURL + 'encrypted';
 
 				// Post to a URL & navigate
-				support.communicate.post(convertedPost, postURL, (responseText, responseStatus) => {
+				support.communicate.post(convertedPost, postTo, (responseText, responseStatus) => {
 					// Callback to navigate to URL
 					if (responseStatus != 200){
 						documentEditor.setData(`Oops! We could not post this document. <br /> Error: <br /> ${responseText}`);
