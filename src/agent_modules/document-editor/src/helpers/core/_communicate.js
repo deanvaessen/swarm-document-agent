@@ -22,8 +22,6 @@
 		const xhr = new XMLHttpRequest();
 		/*eslint-enable */
 
-		console.log( postURL );
-
 		xhr.open('POST', postURL, true);
 
 		//Send the proper header information along with the request
@@ -31,9 +29,6 @@
 		xhr.setRequestHeader('Content-type', 'text/plain;charset=UTF-8');
 
 		xhr.onreadystatechange = function() {//Call a function when the state changes.
-			console.log( xhr.responseText );
-			console.log( xhr.readyState, xhr.status );
-
 			if (xhr.readyState == 4) {
 				callback(xhr.responseText, xhr.status);
 			} else {

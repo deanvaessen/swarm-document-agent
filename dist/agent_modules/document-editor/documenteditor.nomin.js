@@ -60125,8 +60125,6 @@ var index = function () {
 		var xhr = new XMLHttpRequest();
 		/*eslint-enable */
 
-		console.log(postURL);
-
 		xhr.open('POST', postURL, true);
 
 		//Send the proper header information along with the request
@@ -60135,9 +60133,6 @@ var index = function () {
 
 		xhr.onreadystatechange = function () {
 			//Call a function when the state changes.
-			console.log(xhr.responseText);
-			console.log(xhr.readyState, xhr.status);
-
 			if (xhr.readyState == 4) {
 				callback(xhr.responseText, xhr.status);
 			} else {
